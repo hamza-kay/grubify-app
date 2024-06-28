@@ -1,0 +1,41 @@
+extends layout
+block content
+  - let productionUrl = "https://web.squarecdn.com/v1/square.js";
+  - let sandBoxUrl = "https://sandbox.web.squarecdn.com/v1/square.js";
+  - let paymentFormSrc = process.env.NODE_ENV === "sandbox" ? sandBoxUrl : productionUrl;
+  script(type="text/javascript" src=paymentFormSrc)
+  script(type="text/javascript").
+    window.applicationId="#{squareApplicationId}";
+    window.locationId="#{squareLocationId}";
+    window.currency="#{squareAccountCurrency}";
+    window.country="#{squareAccountCountry}";
+    window.idempotencyKey="#{idempotencyKey}"
+
+  form(class="payment-form" id="fast-checkout")
+    div(class="wrapper")
+      div(id="apple-pay-button" alt="apple-pay" type="button")
+      div(id="google-pay-button" alt="google-pay" type="button")
+      div(class="border")
+        span().
+          OR
+
+      div(id="ach-wrapper")
+        label(for="ach-account-holder-name").
+          Full Name
+        input(id="ach-account-holder-name" type="text" placeholder="Jane Doe" name="ach-account-holder-name" autocomplete="name")
+        span(id="ach-message")
+        button(id="ach-button" type="button").
+          Pay with Bank Account
+        div(class="border")
+          span().
+            OR
+
+      div(id="card-container")
+      button(id="card-button" type="button").
+        Pay with Card
+      span(id="payment-flow-message")
+      
+  script(type="text/javascript" src="/js/sq-ach.js")
+  script(type="text/javascript" src="/js/sq-apple-pay.js")
+  script(type="text/javascript" src="/js/sq-google-pay.js")
+  script(type="text/javascript" src="/js/sq-card-pay.js")
