@@ -4,10 +4,10 @@ const router = express.Router();
 const mysql2 = require('mysql2');
 
 const pool = mysql2.createPool({
-    host: 'cvktne7b4wbj4ks1.chr7pe7iynqr.eu-west-1.rds.amazonaws.com',
-    user: 'un2uz57ysd2juvdl',
-    password: 'okrzm64djy5vni98',
-    database: 'v2ycvazsfmgokrd9'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
   });
 
 // Call this function to generate a new access token using the refresh token

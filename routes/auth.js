@@ -11,10 +11,10 @@ function refreshAccessToken() {
 }
 
 const pool = mysql2.createPool({
-    host: 'cvktne7b4wbj4ks1.chr7pe7iynqr.eu-west-1.rds.amazonaws.com',
-    user: 'un2uz57ysd2juvdl',
-    password: 'okrzm64djy5vni98',
-    database: 'v2ycvazsfmgokrd9'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
   });
 
 // router.get('/test', async (req, res) => {
@@ -30,22 +30,12 @@ router.get('/authorization', async (req, res) => {
 
     // Make request to get access token
     const response = await axios.post('https://connect.squareup.com/oauth2/token', {
-        client_id: 'sq0idp-HTffshYsOIyag5YGV4ZfTA',
-        client_secret: 'sq0csp-QO9oR_GF0zuBbQQ554fDuOEnvoCkmfe4PHUVegPtRp0',
+        client_id: process.env.SQ_APPLICATION_ID,
+        client_secret: process.env.SQ_APPLICATION_SECRET,
         code: authorizationCode,
         grant_type: 'authorization_code'
     });
 
-    /**
-    {
-        access_token: 'EAAAljuAIyPuSkj8zHJWdSWRjuD3ehogQNmJv31s-L0D-6qj3zPJhCirOaLAVU8M',
-        token_type: 'bearer',
-        expires_at: '2024-07-24T14:33:12Z',
-        merchant_id: 'MLRKK069REG5G',
-        refresh_token: 'EQAAlpgfxrDFsoP1itRTuiL9UmspAU82C2UkAjDn9W3kZit6XAzdd2fda0zGVchh',
-        short_lived: false
-    }
-     */
     console.log(response.data);
 
     // store access token in backend memory
