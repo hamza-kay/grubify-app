@@ -15,6 +15,10 @@ function refreshAccessToken() {
 
 }
 
+router.get('/test', async (req, res) => {
+    return res.status(200).send('all good');
+});
+
 /**
  * Create a single menu for a merchant
  */
